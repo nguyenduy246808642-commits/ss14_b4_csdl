@@ -51,7 +51,7 @@ begin
 
     declare v_balance decimal(10,2);
 
-    -- xử lý lỗi hệ thống
+
     declare exit handler for sqlexception
     begin
         rollback;
@@ -60,13 +60,11 @@ begin
 
     start transaction;
 
-    -- lấy số dư ví
     select balance
     into v_balance
     from wallets
     where patient_id = p_patient_id;
 
-    -- kiểm tra dữ liệu
     if p_amount <= 0 then
         rollback;
         set p_message = 'số tiền không hợp lệ';
@@ -76,12 +74,12 @@ begin
         set p_message = 'số dư ví không đủ';
 
     else
-        -- trừ ví
+        
         update wallets
         set balance = balance - p_amount
         where patient_id = p_patient_id;
 
-        -- giảm nợ
+    
         update debts
         set debt = debt - p_amount
         where patient_id = p_patient_id;
