@@ -51,7 +51,7 @@ begin
 
     declare v_balance decimal(10,2);
 
-
+-- -- nếu như xảy ra lỗi thì sẽ rollback luôn tại đay
     declare exit handler for sqlexception
     begin
         rollback;
